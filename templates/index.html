@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flask-SSE Quickstart</title>
+</head>
+<body>
+  <h1>LOG MONITOR</h1>
+<div id = "monitor"></div>
+  <script>
+    var source = new EventSource("{{ url_for('sse.stream') }}");
+    source.addEventListener('message', function(event) {
+        var data = JSON.parse(event.data);
+        console.log("server sent data", data.message);
+        var div = document.getElementById('monitor');
+        div.innerHTML  = data.message;
+
+    }, false);
+    source.addEventListener('error', function(event) {
+        
+    }, false);
+  </script>
+</body>
+</html>
